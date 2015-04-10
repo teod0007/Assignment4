@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MathUtils.h"
+#include "../MathUtils.h"
 
 struct SDL_Window;
 
