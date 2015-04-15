@@ -11,6 +11,12 @@
     <Filter Include="Source\MathUtils">
       <UniqueIdentifier>{0c53f5db-65a8-4c75-b5a0-37d99bcdb502}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Parallax">
+      <UniqueIdentifier>{ff51667a-37be-46c3-87a3-b65319e08fc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Graphics">
+      <UniqueIdentifier>{92c94c0b-ff97-4e8c-9976-ad7f724bfcc5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -66,6 +72,20 @@
     </ClCompile>
     <ClCompile Include="src\SoundHelper.cpp">
       <Filter>Source</Filter>
+    <ClCompile Include="src\Parallax\ParallaxLayer.cpp">
+      <Filter>Source\Parallax</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Parallax\ParallaxSystem.cpp">
+      <Filter>Source\Parallax</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Graphics.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\GraphicsOpenGL.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\GraphicsSDL.cpp">
+      <Filter>Source\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -104,6 +124,20 @@
     </ClInclude>
     <ClInclude Include="src\SoundHelper.h">
       <Filter>Source</Filter>
+    <ClInclude Include="src\Parallax\ParallaxLayer.h">
+      <Filter>Source\Parallax</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Parallax\ParallaxSystem.h">
+      <Filter>Source\Parallax</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Graphics.h">
+      <Filter>Source\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\GraphicsOpenGL.h">
+      <Filter>Source\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\GraphicsSDL.h">
+      <Filter>Source\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

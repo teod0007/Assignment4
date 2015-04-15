@@ -83,4 +83,3 @@ public:
 enum Direction{ UP, DOWN, LEFT, RIGHT };
 
 enum EntityState{ IDLE, MOVING, FALLING, DEAD };
-

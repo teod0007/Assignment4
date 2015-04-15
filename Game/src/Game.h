@@ -8,6 +8,7 @@ class Camera;
 class SoundHelper;
 class Player;
 class Enemy;
+class ParallaxSystem;
 
 class Game: public GameEngine
 {
@@ -30,4 +31,7 @@ protected:
   Camera *_gameCamera;
   SoundHelper _soundManager;
   Player *_player;
+  Camera *_parallaxCamera;
+
+  ParallaxSystem *_backgroundParallaxSystem;
 };
