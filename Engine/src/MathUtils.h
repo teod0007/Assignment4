@@ -78,3 +78,9 @@ public:
   static float ToRadians(float degrees);
   static float ToDegrees(float radians);
 };
+
+
+enum Direction{ UP, DOWN, LEFT, RIGHT };
+
+enum EntityState{ IDLE, MOVING, FALLING, DEAD };
+

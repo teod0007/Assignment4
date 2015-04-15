@@ -10,6 +10,7 @@
 #include "MathUtils.h"
 #include "Timer.h"
 #include <vector>
+#include "SoundHelper.h"
 
 // Forward declaring our renderer and window.
 // Because we're using them as pointers, we don't need to know their size

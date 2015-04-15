@@ -5,6 +5,7 @@
 #include "Graphics.h"
 #include "GraphicsOpenGL.h"
 #include <SDL_opengl.h>
+#include "SoundHelper.h"
 
 GameEngine::GameEngine()
 {
@@ -29,6 +30,7 @@ void GameEngine::Initialize()
 
   _graphicsObject = new GraphicsOpenGL();
   _graphicsObject->Initialize(_window);
+  //_soundManager.Initialize();
 
   IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF | IMG_INIT_WEBP);
 

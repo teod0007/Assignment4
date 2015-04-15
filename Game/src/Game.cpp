@@ -5,8 +5,11 @@
 #include <SDL_image.h>
 #include <SDL_opengl.h>
 #include <InputManager.h>
+#include <SoundHelper.h>
 
 #include "Cube.h"
+#include "Player.h"
+#include "Enemy.h"
 #include <Cameras/Camera.h>
 #include <Cameras/PerspectiveCamera.h>
 #include <Cameras/OrthographicCamera.h>
@@ -38,17 +41,24 @@ void Game::InitializeImpl()
 
   float nearPlane = 0.01f;
   float farPlane = 100.0f;
-  Vector4 position(3.5f, 2.5f, 2.5f, 0.0f);
+  //Vector4 position(3.5f, 2.5f, 2.5f, 0.0f);
+  Vector4 position(0.0f, 0.0f, 2.5f, 0.0f);
   Vector4 lookAt = Vector4::Normalize(Vector4::Difference(Vector4(0.0f, 0.0f, 0.0f, 0.0f), position));
   Vector4 up(0.0f, 1.0f, 0.0f, 0.0f);
 
-  //_camera = new PerspectiveCamera(100.0f, 1.0f, nearPlane, farPlane, position, lookAt, up);
+  //_gameCamera = new PerspectiveCamera(100.0f, 1.0f, nearPlane, farPlane, position, lookAt, up);
+  //_gameCamera = new PerspectiveCamera(100.0f, 1.0f, nearPlane, farPlane, position, lookAt, up);
   _gameCamera = new OrthographicCamera(-10.0f, 10.0f, 10.0f, -10.0f, nearPlane, farPlane, position, lookAt, up);
+  _soundManager.Initialize();
+  _player = new Player();
+
+  _objects.push_back(_player);
 
   for (auto itr = _objects.begin(); itr != _objects.end(); itr++)
   {
     (*itr)->Initialize(_graphicsObject);
   }
+
 }
 
 void Game::UpdateImpl(float dt)
@@ -56,6 +66,29 @@ void Game::UpdateImpl(float dt)
   //SDL_Event evt;
   //SDL_PollEvent(&evt);
   InputManager::GetInstance()->Update(dt);
+
+  if (InputManager::GetInstance()->GetKeyState(SDLK_UP, SDL_KEYDOWN) == true)
+  {
+	  _player->Move(UP);
+	  //_soundManager.PlaySound(Move);
+  }
+  if (InputManager::GetInstance()->GetKeyState(SDLK_DOWN, SDL_KEYDOWN) == true)
+  {
+	  _player->Move(DOWN);
+	  //_soundManager.PlaySound(Move);
+  }
+  if (InputManager::GetInstance()->GetKeyState(SDLK_RIGHT, SDL_KEYDOWN) == true)
+  {
+	  _player->Move(RIGHT);
+	  //_soundManager.PlaySound(Move);
+  }
+  if (InputManager::GetInstance()->GetKeyState(SDLK_LEFT, SDL_KEYDOWN) == true)
+  {
+	  _player->Move(LEFT);
+	  //_soundManager.PlaySound(Move);
+  }
+  
+
 
   for (auto itr = _objects.begin(); itr != _objects.end(); itr++)
   {

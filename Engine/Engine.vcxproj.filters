@@ -64,6 +64,9 @@
     <ClCompile Include="src\MathUtils\Matrix4x4.cpp">
       <Filter>Source\MathUtils</Filter>
     </ClCompile>
+    <ClCompile Include="src\SoundHelper.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameEngine.h">
@@ -98,6 +101,9 @@
     </ClInclude>
     <ClInclude Include="src\Cameras\OrthographicCamera.h">
       <Filter>Source\Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SoundHelper.h">
+      <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
