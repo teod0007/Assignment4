@@ -4,7 +4,7 @@
 #include <string>
 
 // Rough estimate of pixel:unit assuming no z-depth for layer.
-#define PIXELS_PER_UNIT 100
+#define PIXELS_PER_UNIT 15
 
 ParallaxLayer::ParallaxLayer(std::string imageName, Vector2 parallaxSpeed)
 {

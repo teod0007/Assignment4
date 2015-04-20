@@ -21,6 +21,8 @@ void ParallaxSystem::Update(Vector2 difference, float dt)
     currentLayer->GetTransform().position.x += difference.x * currentLayer->GetParallaxSpeed().x * dt;
     currentLayer->GetTransform().position.y += difference.y * currentLayer->GetParallaxSpeed().y * dt;
     currentLayer->Update(dt);
+	if (currentLayer->GetTransform().position.y <= -20)
+		currentLayer->GetTransform().position.y = 15.6;
   }
 }
 

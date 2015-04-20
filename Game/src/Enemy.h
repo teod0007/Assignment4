@@ -19,17 +19,20 @@ public:
 	void Update(float dt);
 	void Draw(Graphics *graphics, Matrix4x4 relativeTo, float dt);
 	void Move(Direction d);
-	void Fall(Vector3 destination);
 	EntityState& GetState();
 	void ResetPosition();
+	bool& GetShotStatus();
 protected:
 	//void *_vertexPointer;
 
 	Cube *_enemyCube;
 	EntityState _state; //Used to set the current state of the entity
 	Direction _movementDirection; //If the state is "MOVING", which direction it is moving
-	Timer timer; //Timer used for "AI" purposes
+	Timer movementTimer; //Timer used for "AI" purposes
+	Timer bailOutTimer;//Timer used for "AI" purposes
+	Timer shootTimer;//Timer used for "AI" purposes
 
 	float _moveSpeed;
+	bool _shoot;
 	float _destX, _destY, _destZ; //Where it is going if in movement
 };

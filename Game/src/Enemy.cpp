@@ -19,11 +19,11 @@ void Enemy::Initialize(Graphics *graphics)
 
 	switch (position)
 	{
-	case 0: _transform.position = Vector3(0.0f, 15.0f, -4.0f);
+	case 0: _transform.position = Vector3(7.0f, 15.0f, 0.0f);
 			break;
-	case 1:_transform.position = Vector3(0.0f, 14.0f, -3.0f);
+	case 1:_transform.position = Vector3(0.0f, 14.0f, 0.0f);
 			break;
-	case 2:_transform.position = Vector3(1.0f, 14.0f, -4.0f);
+	case 2:_transform.position = Vector3(-7.0f, 13.0f, 0.0f);
 			break;
 	}
 
@@ -32,113 +32,91 @@ void Enemy::Initialize(Graphics *graphics)
 	_enemyCube->Initialize(graphics);
 	_enemyCube->SetColor(1.0f, 1.0f, 1.0f, 1.0f);
 	_moveSpeed = 2.0f;
+	_state = MOVING;
+	_movementDirection = RIGHT;
+	_shoot = false;
 
-	
-	Fall(Vector3(_transform.position.x, _transform.position.y - 10, _transform.position.z));
-	timer.Start();
+	movementTimer.Start();
+	bailOutTimer.Start();
+	shootTimer.Start();
 
 }
 
 void Enemy::Update(float dt)
 {
-	timer.Update();
+	movementTimer.Update();
+	bailOutTimer.Update();
+	shootTimer.Update();
+	
+	
+	srand(time(NULL));
 
-	if (_state == IDLE)
+
+	
+	if ((movementTimer.GetElapsedTime() >= (rand() % 3) + 1 || _transform.position.x < -10 || _transform.position.x > 10) && _movementDirection != DOWN)
 	{
-		if (timer.GetElapsedTime() >= 3)
-		{
-			timer.Stop();
-			srand(time(NULL));
+		movementTimer.Stop();
+		srand(time(NULL));
 
-			int direction = rand() % 2;
+		if (_movementDirection == RIGHT)
+			_movementDirection = LEFT;
+		else
+		if (_movementDirection == LEFT)
+			_movementDirection = RIGHT;
 
-			switch (direction)
-			{
-				case 0: Move(LEFT);
-					break;
-				case 1: Move(DOWN);
-					break;
-				default:
-					break;
-			}
-
-			timer.Start();
-		}
+		movementTimer.Start();
 	}
 
-	if (_state == FALLING)
-	{
-		_transform.position.y -= dt * _moveSpeed;
-		if (_transform.position.y <= -10)
-		{
-			_state = DEAD;
-		}else
-		if (_transform.position.y <= _destY)
-		{
-			_transform.position.y = _destY;
-			_state = IDLE;
-		}
 
-	}
-	else
+
 		if (_state == MOVING)
 		{
 
 
-		if (_movementDirection == UP)
-		{
-			_transform.position.y += dt * _moveSpeed;
-			_transform.position.x -= dt * _moveSpeed;
-			//_transform.position.y++;
-			//_transform.position.x--;
-			if (_transform.position.y >= _destY || _transform.position.x <= _destX)
+			if (_movementDirection == DOWN)
 			{
-				_transform.position.y = _destY;
-				_transform.position.x = _destX;
-				_state = IDLE;
+				_transform.position.y -= dt * _moveSpeed;
+				//_transform.position.y--;
+				//_transform.position.x++;
 			}
-		}
-		if (_movementDirection == DOWN)
-		{
-			_transform.position.y -= dt * _moveSpeed;
-			_transform.position.x += dt * _moveSpeed;
-			//_transform.position.y--;
-			//_transform.position.x++;
-			if (_transform.position.y <= _destY || _transform.position.x >= _destX)
+			else
 			{
-				_transform.position.y = _destY;
-				_transform.position.x = _destX;
-				_state = IDLE;
+				_transform.position.y -= dt * _moveSpeed * 0.3;//slowly descends
+			
 			}
-		}
-		if (_movementDirection == RIGHT)
-		{
-			_transform.position.y += dt * _moveSpeed;
-			_transform.position.z -= dt * _moveSpeed;
-			//_transform.position.y++;
-			//_transform.position.z--;
-			if (_transform.position.y >= _destY || _transform.position.z <= _destZ)
+
+			if (_movementDirection == RIGHT)
 			{
-				_transform.position.y = _destY;
-				_transform.position.z = _destZ;
-				_state = IDLE;
+				_transform.position.x += dt * _moveSpeed;
+				//_transform.position.y++;
+				//_transform.position.z--;
 			}
-		}
-		if (_movementDirection == LEFT)
-		{
-			_transform.position.y -= dt * _moveSpeed;
-			_transform.position.z += dt * _moveSpeed;
-			//_transform.position.y--;
-			//_transform.position.z++;
-			if (_transform.position.y <= _destY || _transform.position.z >= _destZ)
+			if (_movementDirection == LEFT)
 			{
-				_transform.position.y = _destY;
-				_transform.position.z = _destZ;
-				_state = IDLE;
+				_transform.position.x -= dt * _moveSpeed;
+				//_transform.position.y--;
+				//_transform.position.z++;
 			}
-		}
+			
 
 		}
+
+
+	if (bailOutTimer.GetElapsedTime() >= 30)
+	{
+		_movementDirection = DOWN;
+		
+	}
+	if (shootTimer.GetElapsedTime() >= 3)
+	{
+		shootTimer.Stop();
+		_shoot = true;;
+		shootTimer.Start();
+	}
+	if (_transform.position.y <= -12)
+		ResetPosition();
+
+
 	_enemyCube->GetTransform().position = _transform.position;
 
 }
@@ -149,49 +127,10 @@ void Enemy::Draw(Graphics *graphics, Matrix4x4 relativeTo, float dt)
 
 void Enemy::Move(Direction d)
 {
-	if (_state == IDLE)
-	{
+	
 		_state = MOVING;
 		_movementDirection = d;
-		if (d == UP)
-		{
-			_destX = _transform.position.x - 1;
-			_destY = _transform.position.y + 1;
-			//_transform.position.y++;
-			//_transform.position.x--;
-		}
-		if (d == DOWN)
-		{
-			_destX = _transform.position.x + 1;
-			_destY = _transform.position.y - 1;
-			//_transform.position.y--;
-			//_transform.position.x++;
-		}
-		if (d == RIGHT)
-		{
-			_destZ = _transform.position.z - 1;
-			_destY = _transform.position.y + 1;
-			//_transform.position.y++;
-			//_transform.position.z--;
-		}
-		if (d == LEFT)
-		{
-			_destZ = _transform.position.z + 1;
-			_destY = _transform.position.y - 1;
-			//_transform.position.y--;
-			//_transform.position.z++;
-		}
-	}
 
-}
-
-
-void Enemy::Fall(Vector3 destination)
-{
-	_state = FALLING;
-	_destX = destination.x;
-	_destY = destination.y;
-	_destZ = destination.z;
 }
 
 EntityState& Enemy::GetState()
@@ -199,21 +138,29 @@ EntityState& Enemy::GetState()
 	return _state;
 }
 
+bool& Enemy::GetShotStatus()
+{
+	return _shoot;
+}
+
 void Enemy::ResetPosition()
 {
 	srand(time(NULL));
+
+	bailOutTimer.Stop();
 
 	int position = rand() % 3;
 
 	switch (position)
 	{
-	case 0: _transform.position = Vector3(0.0f, 15.0f, -4.0f);
+	case 0: _transform.position = Vector3(7.0f, 15.0f, 0.0f);
 		break;
-	case 1:_transform.position = Vector3(0.0f, 14.0f, -3.0f);
+	case 1:_transform.position = Vector3(0.0f, 14.0f, 0.0f);
 		break;
-	case 2:_transform.position = Vector3(1.0f, 14.0f, -4.0f);
+	case 2:_transform.position = Vector3(-7.0f, 13.0f, 0.0f);
 		break;
 	}
+	_movementDirection = RIGHT;
+	bailOutTimer.Start();
 
-	Fall(Vector3(_transform.position.x, _transform.position.y - 10, _transform.position.z));
 }

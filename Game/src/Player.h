@@ -23,7 +23,7 @@ protected:
 
 	Cube *_playerCube;
 	EntityState _state;//Used to set the current state of the entity
-	Direction _movementDirection;//If the state is "MOVING", which direction it is moving
+	Direction* _movementDirection;//If the state is "MOVING", which direction it is moving
 	float _moveSpeed;
 	float _destX, _destY, _destZ;//Where it is going if in movement
 };

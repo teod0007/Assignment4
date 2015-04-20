@@ -43,7 +43,6 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(BOX2D);..\Engine\src;$(SDL)/include;$(SDL_image)/include;$(SDL_mixer)/include;$(IncludePath)</IncludePath>
     <LibraryPath>..\External\Box2D_v2.3.0\Box2D\Build\vs2012\bin\$(Configuration);$(BOX2D)\Build\vs2012\bin\$(Configuration);..\$(Configuration);$(SDL)/lib/x86;$(SDL_image)/lib/x86;$(SDL_mixer)/lib/x86;$(LibraryPath)</LibraryPath>
-
     <SourcePath>$(BOX2D);$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -61,7 +60,6 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;Engine.lib;Box2D.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -83,6 +81,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="src\Cube.cpp" />
     <ClCompile Include="src\Enemy.cpp" />
     <ClCompile Include="src\Game.cpp" />
@@ -90,6 +89,7 @@
     <ClCompile Include="src\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="src\Cube.h" />
     <ClInclude Include="src\Enemy.h" />
     <ClInclude Include="src\Game.h" />
