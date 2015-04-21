@@ -11,6 +11,7 @@ class SoundHelper
 
 public:
 
+	~SoundHelper();
 	void Initialize();
 	void PlaySound(GameSound sound);
 

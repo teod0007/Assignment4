@@ -13,6 +13,7 @@ class Enemy : public GameObject
 {
 public:
 	Enemy();
+	~Enemy();
 	Enemy(Vector3 position);
 
 	void Initialize(Graphics *graphics);

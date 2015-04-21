@@ -9,6 +9,7 @@ class Player : public GameObject
 {
 public:
 	Player();
+	~Player();
 	Player(Vector3 position);
 
 	void Initialize(Graphics *graphics);

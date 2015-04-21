@@ -5,6 +5,11 @@ Enemy::Enemy()
 {
 	_transform.position = Vector3(0.0f, 0.0f, 0.0f);
 }
+
+Enemy::~Enemy()
+{
+	delete _enemyCube;
+}
 Enemy::Enemy(Vector3 position)
 {
 	_transform.position = position;

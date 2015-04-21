@@ -10,6 +10,12 @@ Player::Player(Vector3 position)
 	_transform.position = position;
 }
 
+Player::~Player()
+{
+	delete _playerCube;
+	delete _movementDirection;
+
+}
 
 void Player::Initialize(Graphics *graphics)
 {

@@ -1,5 +1,20 @@
 #include "SoundHelper.h"
 
+
+SoundHelper::~SoundHelper()
+{
+	 
+	delete enemyShotSound;
+	delete terminatedSound;
+	delete playerShotSound;
+	delete letsRockSound;
+	delete gameOverSound;
+	delete themeMusic;
+
+	terminatedSound = enemyShotSound = playerShotSound = letsRockSound = gameOverSound = nullptr;
+	themeMusic = nullptr;
+}
+
  void SoundHelper::Initialize()
 {
 	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 1, 4096);

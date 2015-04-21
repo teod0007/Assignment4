@@ -13,6 +13,7 @@ class Projectile : public GameObject
 {
 public:
 	Projectile();
+	~Projectile();
 	Projectile(Vector3 position);
 	Projectile(Vector3 position,Vector3 destination);
 

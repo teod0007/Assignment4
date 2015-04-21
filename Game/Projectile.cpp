@@ -6,6 +6,14 @@ Projectile::Projectile()
 {
 	_transform.position = Vector3(0.0f, 0.0f, 0.0f);
 }
+
+Projectile::~Projectile()
+{
+	delete _projectileCube;
+	delete destination;
+}
+
+
 Projectile::Projectile(Vector3 position)
 {
 	destination = nullptr;

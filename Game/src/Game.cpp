@@ -56,6 +56,29 @@ Game::~Game()
     layerToDelete = nullptr;
   }
 
+  delete _player;
+  _player = nullptr;
+  for (int i = 0; i < _playerProjectiles.size(); i++)
+  {
+	  delete _playerProjectiles.at(i);
+	  _playerProjectiles.at(i) = nullptr;
+  }
+  _playerProjectiles.clear();
+  for (int i = 0; i < _enemyProjectiles.size(); i++)
+  {
+	  delete _enemyProjectiles.at(i);
+	  _enemyProjectiles.at(i) = nullptr;
+  }
+  _enemyProjectiles.clear();
+
+  for (int i = 0; i < MAX_ENEMY_NUMBER; i++)
+  {
+	  if (_enemyList[i] != nullptr)
+		  delete _enemyList[i];
+	  _enemyList[i] = nullptr;
+  }
+  delete _enemyList;
+
   delete _backgroundParallaxSystem;
   _backgroundParallaxSystem;
 }
@@ -218,8 +241,8 @@ void Game::DrawImpl(Graphics *graphics, float dt)
   if (_player->GetState() == DEAD && !message)
   {
 	  _soundManager.PlaySound(EndGame);
-	  SDL_MessageBoxData* data = new SDL_MessageBoxData();
-	  data->numbuttons = 2;
+	  SDL_MessageBoxData data = SDL_MessageBoxData();
+	  data.numbuttons = 2;
 	  SDL_MessageBoxButtonData buttons[] = {
 			  { /* .flags, .buttonid, .text */        0, 0, "no" },
 			  { SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT, 1, "yes" } };
@@ -237,11 +260,11 @@ void Game::DrawImpl(Graphics *graphics, float dt)
 				  { 255, 0, 255 }
 			  }
 	  };
-	  data->colorScheme = &colorScheme;
-	  data->buttons = buttons;
-	  data->message = "Game Over - Play Again?";
+	  data.colorScheme = &colorScheme;
+	  data.buttons = buttons;
+	  data.message = "Game Over - Play Again?";
 	  int id;
-	  if (SDL_ShowMessageBox(data, &id) < 0) {
+	  if (SDL_ShowMessageBox(&data, &id) < 0) {
 		  SDL_Log("Error displaying message box");
 	  }
 
@@ -257,7 +280,17 @@ void Game::DrawImpl(Graphics *graphics, float dt)
 	  {
 
 		  _objects.clear();
+		  for (int i = 0; i < _playerProjectiles.size(); i++)
+		  {
+			  delete _playerProjectiles.at(i);
+			  _playerProjectiles.at(i) = nullptr;
+		  }
 		  _playerProjectiles.clear();
+		  for (int i = 0; i < _enemyProjectiles.size(); i++)
+		  {
+			  delete _enemyProjectiles.at(i);
+			  _enemyProjectiles.at(i) = nullptr;
+		  }
 		  _enemyProjectiles.clear();
 
 		  for (int i = 0; i < MAX_ENEMY_NUMBER; i++)
@@ -347,8 +380,11 @@ void Game::CheckDeadProjectiles(std::vector<Projectile *>& projectileVector)
 		{
 			if ((*itr) == (*itr2))
 			{
+				Projectile* p = projectileVector.at(projN);
 				projectileVector.erase(projectileVector.begin() + projN);
 				_objects.erase(_objects.begin() + objN);
+				delete p;
+				p = nullptr;
 				erased = true;
 				break;
 			}
@@ -403,6 +439,7 @@ void Game::CheckCollisionPlayer(std::vector<Projectile *>& projectileVector)
 			}
 		}
 		delete r;
+		r = nullptr;
 }
 
 void Game::CheckCollisionEnemies(std::vector<Projectile *>& projectileVector)
@@ -446,6 +483,7 @@ void Game::CheckCollisionEnemies(std::vector<Projectile *>& projectileVector)
 
 			}
 			delete r;
+			r = nullptr;
 		}
 
 
@@ -495,6 +533,7 @@ void Game::CheckCollisionEnemies(std::vector<Projectile *>& projectileVector)
 
 		}
 		delete r;
+		r = nullptr;
 	}
 
 
